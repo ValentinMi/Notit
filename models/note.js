@@ -14,8 +14,8 @@ const Note = mongoose.model(
       type: Date,
       required: true
     },
-    user: {
-      type: userSchema,
+    userid: {
+      type: String,
       required: true
     }
   })
