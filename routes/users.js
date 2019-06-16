@@ -1,5 +1,5 @@
 const bcrypt = require("bcrypt");
-const _ = require("lodash");
+const moment = require("moment");
 const auth = require("../middleware/auth");
 const { User, validate } = require("../models/user");
 const express = require("express");
@@ -22,9 +22,14 @@ router.post("/", async (req, res) => {
   if (user) return res.status(400).send("User already registered");
 
   // Create new User and hash his password
-  user = new User(
-    _.pick(req.body, ["firstname", "lastname", "email", "password"])
-  );
+  user = new User({
+    firstname: req.body.firstname,
+    lastname: req.body.lastname,
+    email: req.body.email,
+    password: req.body.password,
+    registerDate: moment().toJSON()
+  });
+
   const salt = await bcrypt.genSalt(10);
   user.password = await bcrypt.hash(user.password, salt);
   await user.save();
