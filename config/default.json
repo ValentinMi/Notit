@@ -1,5 +1,5 @@
 {
-  "db": "mongodb://localhost/markit",
+  "db": "mongodb://localhost/notit",
   "port": "3900",
   "jwtPrivateKey": "unsecureKey",
   "requiresAuth": true
