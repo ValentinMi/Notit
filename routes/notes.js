@@ -6,7 +6,7 @@ const express = require("express");
 const router = express.Router();
 
 // GET ALL NOTES
-router.get("/", [auth], [admin], async (req, res) => {
+router.get("/", async (req, res) => {
   const notes = await Note.find()
     .select("-__v")
     .sort("date");
