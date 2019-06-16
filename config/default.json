@@ -1,5 +1,6 @@
 {
   "db": "mongodb://localhost/markit",
   "port": "3900",
-  "jwtPrivateKey": "unsecureKey"
+  "jwtPrivateKey": "unsecureKey",
+  "requiresAuth": true
 }

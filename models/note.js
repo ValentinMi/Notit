@@ -14,8 +14,10 @@ const Note = mongoose.model(
       type: Date,
       required: true
     },
-    userid: {
+    user: {
       type: String,
+      minlength: 1,
+      maxlength: 1000,
       required: true
     }
   })
@@ -26,9 +28,7 @@ function validateNote(note) {
     note: Joi.number()
       .min(0)
       .max(5)
-      .required(),
-    date: Joi.date().required(),
-    userId: Joi.objectId().required()
+      .required()
   };
 
   return Joi.validate(note, schema);
