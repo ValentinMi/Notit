@@ -9,10 +9,19 @@ class NotingContainer extends Component {
       value: "",
       color: ""
     },
-    hoursLeft: 5
+    hoursLeft: ""
   };
 
+  componentDidMount() {
+    // Get current time to calculte how many hours left to midnight
+    const currentDate = new Date();
+    let currentHour = currentDate.getHours();
+    let timeLeftToMidnight = 24 - currentHour;
+    this.setState({ hoursLeft: timeLeftToMidnight });
+  }
+
   handleNoteSelect = (value, color) => {
+    // Update state when user click on note
     const note = { ...this.state.note };
     note.value = value;
     note.color = color;
@@ -27,6 +36,7 @@ class NotingContainer extends Component {
       { value: 4, color: "gd-day" },
       { value: 5, color: "vgd-day" }
     ];
+
     return (
       <div className="row ">
         <div className="col-md-12">

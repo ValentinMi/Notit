@@ -15,6 +15,9 @@ const TopMenu = () => {
           <Nav.Link className="top-menu-nav-link" href="#link">
             Your statistics
           </Nav.Link>
+          <Nav.Link className="top-menu-nav-link" href="#link">
+            Login
+          </Nav.Link>
         </Nav>
       </Navbar.Collapse>
     </Navbar>
