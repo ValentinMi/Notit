@@ -1,3 +1,4 @@
+const _ = require("lodash");
 const bcrypt = require("bcrypt");
 const moment = require("moment");
 const auth = require("../middleware/auth");
@@ -23,15 +24,29 @@ router.post("/", async (req, res) => {
 
   // Create new User and hash his password
   user = new User({
-    firstname: req.body.firstname,
-    lastname: req.body.lastname,
     email: req.body.email,
     password: req.body.password,
     registerDate: moment().toJSON()
   });
 
+  // Config salt
   const salt = await bcrypt.genSalt(10);
+
+  // Hash passwords
   user.password = await bcrypt.hash(user.password, salt);
+
+  const passwordConfirmation = await bcrypt.hash(
+    req.body.passwordConfirmation,
+    salt
+  );
+
+  // Compare them
+  if (user.password !== passwordConfirmation) {
+    return res
+      .status(400)
+      .send("Password confirmation and Password must match");
+  }
+
   await user.save();
 
   // Create JWT

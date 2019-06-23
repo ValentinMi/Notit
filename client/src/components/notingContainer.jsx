@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import NoteCell from "./communs/noteCell";
+import NoteCell from "./commons/noteCell";
 import { Button } from "react-bootstrap";
 import "../styles/notingContainer.css";
 
@@ -13,12 +13,16 @@ class NotingContainer extends Component {
   };
 
   componentDidMount() {
+    this.calculHoursLeft();
+  }
+
+  calculHoursLeft = () => {
     // Get current time to calculte how many hours left to midnight
     const currentDate = new Date();
     let currentHour = currentDate.getHours();
     let timeLeftToMidnight = 24 - currentHour;
     this.setState({ hoursLeft: timeLeftToMidnight });
-  }
+  };
 
   handleNoteSelect = (value, color) => {
     // Update state when user click on note
@@ -36,6 +40,8 @@ class NotingContainer extends Component {
       { value: 4, color: "gd-day" },
       { value: 5, color: "vgd-day" }
     ];
+
+    // const { user } = this.props;
 
     return (
       <div className="row ">
