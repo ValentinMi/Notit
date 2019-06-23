@@ -10,3 +10,9 @@ export function register(user) {
     passwordConfirmation: user.passwordConfirmation
   });
 }
+
+export function updateThisDayNoted(userId, bool) {
+  return http.put(apiEndPoint + "/" + userId, {
+    thisDayNoted: bool
+  });
+}

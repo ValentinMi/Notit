@@ -20,6 +20,7 @@ const userSchema = new mongoose.Schema({
     type: Date,
     required: true
   },
+  thisDayNoted: Boolean,
   isAdmin: Boolean
 });
 
@@ -51,8 +52,8 @@ function validateUser(user) {
       .required(),
     passwordConfirmation: Joi.string()
       .min(5)
-      .max(1024)
-      .required()
+      .max(1024),
+    thisDayNoted: Joi.boolean()
   };
 
   return Joi.validate(user, schema);

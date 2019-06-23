@@ -1,6 +1,8 @@
 import React, { Component } from "react";
-import NoteCell from "./commons/noteCell";
 import { Button } from "react-bootstrap";
+import NoteCell from "./commons/noteCell";
+import { saveNote } from "../services/noteService";
+import { toast } from "react-toastify";
 import "../styles/notingContainer.css";
 
 class NotingContainer extends Component {
@@ -32,6 +34,17 @@ class NotingContainer extends Component {
     this.setState({ note: note });
   };
 
+  doSubmit = async () => {
+    try {
+      console.log(this.state.note);
+      await saveNote(this.state.note);
+      toast.info("Note saved !");
+    } catch (ex) {
+      toast.error("An error occured !");
+    }
+    await saveNote(this.state.note.value);
+  };
+
   render() {
     const noteList = [
       { value: 1, color: "vbad-day" },
@@ -59,7 +72,11 @@ class NotingContainer extends Component {
               ))}
             </div>
             {this.state.note.value && (
-              <Button variant="primary" className="validate-btn">
+              <Button
+                variant="primary"
+                className="validate-btn"
+                onClick={() => this.doSubmit()}
+              >
                 Validate <NoteCell color={this.state.note.color} />
               </Button>
             )}

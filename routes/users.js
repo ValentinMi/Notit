@@ -2,6 +2,7 @@ const _ = require("lodash");
 const bcrypt = require("bcrypt");
 const moment = require("moment");
 const auth = require("../middleware/auth");
+const admin = require("../middleware/admin");
 const { User, validate } = require("../models/user");
 const express = require("express");
 const router = express.Router();
@@ -26,7 +27,8 @@ router.post("/", async (req, res) => {
   user = new User({
     email: req.body.email,
     password: req.body.password,
-    registerDate: moment().toJSON()
+    registerDate: moment().toJSON(),
+    thisDayNoted: false
   });
 
   // Config salt
@@ -55,6 +57,29 @@ router.post("/", async (req, res) => {
     .header("x-auth-token", token)
     .header("access-control-expose-headers", "x-auth-token")
     .send(_.pick(user, ["id", "firstname", "lastname", "email"]));
+});
+
+// UPDATE NOTE BOOLEAN
+router.put("/daynoted", [auth], async (req, res) => {
+  var user = await User.findById(req.user._id);
+  if (!user) return res.status(404).send("User not found");
+
+  user.thisDayNoted = true;
+
+  await user.save();
+
+  res.send(user);
+});
+
+// RESET ALL NOTE BOOLEAN
+router.put("/resetdaynoted", [auth], [admin], async (req, res) => {
+  const users = await User.find();
+
+  users.forEach(user => {
+    user.thisDayNoted = false;
+  });
+
+  res.send(users);
 });
 
 module.exports = router;

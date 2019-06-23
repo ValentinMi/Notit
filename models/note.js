@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const Note = mongoose.model(
   "Notes",
   new mongoose.Schema({
-    note: {
+    value: {
       type: Number,
       required: true,
       min: 0,
@@ -25,10 +25,11 @@ const Note = mongoose.model(
 
 function validateNote(note) {
   const schema = {
-    note: Joi.number()
+    value: Joi.number()
       .min(0)
       .max(5)
-      .required()
+      .required(),
+    color: Joi.string()
   };
 
   return Joi.validate(note, schema);

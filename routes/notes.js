@@ -1,6 +1,6 @@
 const { Note, validate } = require("../models/note");
 const auth = require("../middleware/auth");
-const admin = require("../middleware/admin");
+// const admin = require("../middleware/admin");
 const moment = require("moment");
 const express = require("express");
 const router = express.Router();
@@ -28,7 +28,7 @@ router.post("/", [auth], async (req, res) => {
   if (error) return res.status(400).send(error.details[0].message);
 
   const note = new Note({
-    note: req.body.note,
+    value: req.body.value,
     date: moment().toJSON(),
     user: req.user._id
   });
