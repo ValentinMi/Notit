@@ -3,9 +3,9 @@ import { apiUrl } from "../config.json";
 
 const apiEndPoint = apiUrl + "/notes";
 
-function noteUrl(id) {
-  return `${apiEndPoint}/${id}`;
-}
+// function noteUrl(id) {
+//   return `${apiEndPoint}/${id}`;
+// }
 
 // GET NOTES FROM ALL USERS
 export function getAllNotes() {

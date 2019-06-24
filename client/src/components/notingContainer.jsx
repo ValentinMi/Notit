@@ -36,13 +36,11 @@ class NotingContainer extends Component {
 
   doSubmit = async () => {
     try {
-      console.log(this.state.note);
       await saveNote(this.state.note);
       toast.info("Note saved !");
     } catch (ex) {
       toast.error("An error occured !");
     }
-    await saveNote(this.state.note.value);
   };
 
   render() {
