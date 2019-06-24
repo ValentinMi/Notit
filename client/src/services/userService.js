@@ -11,8 +11,6 @@ export function register(user) {
   });
 }
 
-export function updateThisDayNoted(userId, bool) {
-  return http.put(apiEndPoint + "/" + userId, {
-    thisDayNoted: bool
-  });
+export function updateThisDayNoted() {
+  return http.put(apiEndPoint + "/daynoted");
 }

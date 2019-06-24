@@ -61,7 +61,7 @@ router.post("/", async (req, res) => {
 
 // UPDATE NOTE BOOLEAN
 router.put("/daynoted", [auth], async (req, res) => {
-  var user = await User.findById(req.user._id);
+  const user = await User.findById(req.user._id);
   if (!user) return res.status(404).send("User not found");
 
   user.thisDayNoted = true;
@@ -75,8 +75,9 @@ router.put("/daynoted", [auth], async (req, res) => {
 router.put("/resetdaynoted", [auth], [admin], async (req, res) => {
   const users = await User.find();
 
-  users.forEach(user => {
+  users.forEach(async user => {
     user.thisDayNoted = false;
+    await user.save();
   });
 
   res.send(users);
