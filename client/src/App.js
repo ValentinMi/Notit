@@ -7,19 +7,25 @@ import LoginForm from "./components/loginForm";
 import RegisterForm from "./components/registerForm";
 import Logout from "./components/logOut";
 import auth from "./services/authService";
+import { getNotingStatus } from "./services/userService";
 import "./styles/App.css";
 
 class App extends Component {
-  state = {};
+  state = {
+    user: "",
+    thisDayNoted: ""
+  };
 
-  componentDidMount() {
+  async componentDidMount() {
     const user = auth.getCurrentUser();
-    this.setState({ user });
+    if (user) {
+      const thisDayNoted = await getNotingStatus();
+      this.setState({ user: user, thisDayNoted: thisDayNoted });
+    }
   }
 
   render() {
-    const { user } = this.state;
-
+    const { user, thisDayNoted } = this.state;
     return (
       <React.Fragment>
         <div className="App">
@@ -27,7 +33,7 @@ class App extends Component {
           <TopMenu user={user} />
           <div className="container">
             <Switch>
-              {user && (
+              {!thisDayNoted && user && (
                 <Route
                   path="/home"
                   render={() => <NotingContainer user={user} />}

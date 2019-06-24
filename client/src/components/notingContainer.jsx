@@ -3,6 +3,7 @@ import { Button } from "react-bootstrap";
 import NoteCell from "./commons/noteCell";
 import { saveNote } from "../services/noteService";
 import { toast } from "react-toastify";
+import { updateThisDayNoted } from "../services/userService";
 import "../styles/notingContainer.css";
 
 class NotingContainer extends Component {
@@ -37,6 +38,8 @@ class NotingContainer extends Component {
   doSubmit = async () => {
     try {
       await saveNote(this.state.note);
+      await updateThisDayNoted();
+      window.location = "/";
       toast.info("Note saved !");
     } catch (ex) {
       toast.error("An error occured !");

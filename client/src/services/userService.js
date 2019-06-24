@@ -14,3 +14,8 @@ export function register(user) {
 export function updateThisDayNoted() {
   return http.put(apiEndPoint + "/daynoted");
 }
+
+export async function getNotingStatus() {
+  const { data } = await http.get(apiEndPoint + "/me");
+  return data.thisDayNoted;
+}
