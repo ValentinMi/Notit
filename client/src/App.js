@@ -6,6 +6,7 @@ import NotingContainer from "./components/notingContainer";
 import LoginForm from "./components/loginForm";
 import RegisterForm from "./components/registerForm";
 import Logout from "./components/logOut";
+import HomeUserGraph from "./components/homeUserGraph";
 import auth from "./services/authService";
 import { getNotingStatus } from "./services/userService";
 import "./styles/App.css";
@@ -33,12 +34,16 @@ class App extends Component {
           <TopMenu user={user} />
           <div className="container">
             <Switch>
-              {!thisDayNoted && user && (
-                <Route
-                  path="/home"
-                  render={() => <NotingContainer user={user} />}
-                />
-              )}
+              <Route
+                path="/home"
+                render={() => (
+                  <React.Fragment>
+                    {!thisDayNoted && user && <NotingContainer user={user} />}
+                    {user && <HomeUserGraph />}
+                  </React.Fragment>
+                )}
+              />
+
               <Route path="/logout" exact component={Logout} />
               <Route path="/login" exact component={LoginForm} />
               <Route path="/register" exact component={RegisterForm} />
