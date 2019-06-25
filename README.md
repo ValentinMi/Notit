@@ -1,14 +1,8 @@
-# React Express Starter Pack
-
-> Create full stack apps with React and Express. Run your client and server with a single command. 
-
-### Redux Version
-This version does not include Redux
-[Click Here For Redux Version](https://github.com/bradtraversy/react_redux_express_starter) 
+# Notit
 
 ## Quick Start
 
-``` bash
+```bash
 # Install dependencies for server
 npm install
 
@@ -24,15 +18,19 @@ npm run server
 # Run the React client only
 npm run client
 
-# Server runs on http://localhost:5000 and client on http://localhost:3000
+# Server runs on http://localhost:5000 and client on http://localhost:3000 by default
 ```
 
 ## App Info
 
+Notit est une application qui chaque jour vous demande de noter votre journée et en sort des statistiques sur le long terme.
+
+Notit is an application where you can , everyday, note your quality day and get some statistics.
+
 ### Author
 
-Brad Traversy
-[Traversy Media](http://www.traversymedia.com)
+Valentin Misiadzek
+(www.misiaszek-valentin.com)
 
 ### Version
 
