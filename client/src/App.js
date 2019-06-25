@@ -1,14 +1,18 @@
+// Libraries
 import React, { Component } from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+// Components
 import TopMenu from "./components/topMenu";
 import NotingContainer from "./components/notingContainer";
 import LoginForm from "./components/loginForm";
 import RegisterForm from "./components/registerForm";
 import Logout from "./components/logOut";
 import HomeUserGraph from "./components/homeUserGraph";
+// Services
 import auth from "./services/authService";
 import { getNotingStatus } from "./services/userService";
+// Styles
 import "./styles/App.css";
 
 class App extends Component {
