@@ -1,5 +1,5 @@
 const { Note, validate } = require("../models/note");
-const auth = require("../middleware/auth");
+const auth = require("../middlewares/auth");
 // const admin = require("../middleware/admin");
 const moment = require("moment");
 const express = require("express");
@@ -8,7 +8,7 @@ const router = express.Router();
 // GET ALL NOTES
 router.get("/", async (req, res) => {
   const notes = await Note.find()
-    .select("-__v")
+    .select("-__v -user")
     .sort("date");
 
   // Send notes to client
@@ -20,6 +20,14 @@ router.get("/mine", [auth], async (req, res) => {
   const notes = await Note.find({ user: req.user._id }).sort("date");
 
   res.send(notes);
+});
+
+// GET THIS WEEK NOTES FROM AN USER
+router.get("/mine/day", [auth], async (req, res) => {
+  const daysNote = await Note.find({
+    user: req.user._id,
+    date
+  });
 });
 
 // POST NEW NOTE
@@ -48,7 +56,7 @@ router.put("/:id", [auth], async (req, res) => {
       note: req.body.note
     },
     { new: true }
-  );
+  ).select("-password");
 
   if (!note)
     return res.status(404).send("The note with the given ID was not found.");

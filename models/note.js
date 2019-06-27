@@ -4,20 +4,28 @@ const mongoose = require("mongoose");
 const Note = mongoose.model(
   "Notes",
   new mongoose.Schema({
+    user: {
+      type: String,
+      minlength: 1,
+      maxlength: 1000,
+      required: true
+    },
     value: {
       type: Number,
       required: true,
       min: 0,
       max: 5
     },
-    date: {
+    fullDate: {
       type: Date,
       required: true
     },
-    user: {
-      type: String,
-      minlength: 1,
-      maxlength: 1000,
+    Year: {
+      type: Number,
+      required: true
+    },
+    Month: {
+      type: Number,
       required: true
     }
   })

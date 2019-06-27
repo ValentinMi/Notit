@@ -1,8 +1,8 @@
 const _ = require("lodash");
 const bcrypt = require("bcrypt");
 const moment = require("moment");
-const auth = require("../middleware/auth");
-const admin = require("../middleware/admin");
+const auth = require("../middlewares/auth");
+const admin = require("../middlewares/admin");
 const { User, validate } = require("../models/user");
 const express = require("express");
 const router = express.Router();

@@ -2,7 +2,7 @@ const express = require("express");
 const auth = require("../routes/auth");
 const notes = require("../routes/notes");
 const users = require("../routes/users");
-const error = require("../middleware/error");
+const error = require("../middlewares/error");
 
 module.exports = function(app) {
   app.use(express.json());
