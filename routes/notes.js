@@ -1,6 +1,7 @@
 const { Note, validate } = require("../models/note");
 const auth = require("../middlewares/auth");
 // const admin = require("../middleware/admin");
+const { getObjDate } = require("../scripts/dateFinder");
 const moment = require("moment");
 const express = require("express");
 const router = express.Router();
@@ -22,12 +23,42 @@ router.get("/mine", [auth], async (req, res) => {
   res.send(notes);
 });
 
-// GET THIS WEEK NOTES FROM AN USER
-router.get("/mine/day", [auth], async (req, res) => {
-  const daysNote = await Note.find({
+// GET CURRENT WEEK NOTES FROM AN USER
+router.get("/mine/week", [auth], async (req, res) => {
+  var date = getObjDate();
+
+  const notes = await Note.find({
     user: req.user._id,
-    date
-  });
+    week: date.week,
+    year: date.year
+  }).select("-__v");
+
+  res.send(notes);
+});
+
+// GET CURRENT MONTH NOTES FROM AN USER
+router.get("/mine/month", [auth], async (req, res) => {
+  var date = getObjDate();
+
+  const notes = await Note.find({
+    user: req.user._id,
+    month: date.week,
+    year: date.year
+  }).select("-__v");
+
+  res.send(notes);
+});
+
+// GET CURRENT YEAR NOTES FROM AN USER
+router.get("/mine/month", [auth], async (req, res) => {
+  var date = getObjDate();
+
+  const notes = await Note.find({
+    user: req.user._id,
+    year: date.year
+  }).select("-__v");
+
+  res.send(notes);
 });
 
 // POST NEW NOTE
@@ -35,11 +66,18 @@ router.post("/", [auth], async (req, res) => {
   const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
+  var date = getObjDate();
+
   const note = new Note({
+    user: req.user._id,
     value: req.body.value,
-    date: moment().toJSON(),
-    user: req.user._id
+    fullDate: moment().toJSON(),
+    year: date.year,
+    month: date.month,
+    week: date.week,
+    day: date.day
   });
+
   await note.save();
 
   res.send(note);

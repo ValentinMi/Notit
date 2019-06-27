@@ -20,11 +20,19 @@ const Note = mongoose.model(
       type: Date,
       required: true
     },
-    Year: {
+    year: {
       type: Number,
       required: true
     },
-    Month: {
+    month: {
+      type: Number,
+      required: true
+    },
+    week: {
+      type: Number,
+      required: true
+    },
+    day: {
       type: Number,
       required: true
     }

@@ -1,4 +1,5 @@
 // Function to make an object of the date
+
 function getObjDate() {
   var date = new Date();
   // Get current year
@@ -9,6 +10,15 @@ function getObjDate() {
   var w = getWeekNumber();
   // Get current day
   var d = date.getUTCDate();
+
+  // Function to find current week number
+  function getWeekNumber() {
+    const today = new Date();
+    const firstDayOfYear = new Date(today.getFullYear(), 0, 1);
+    const pastDaysOfYear = (today - firstDayOfYear) / 86400000;
+    return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
+  }
+
   return {
     year: y,
     month: m,
@@ -16,13 +26,5 @@ function getObjDate() {
     day: d
   };
 }
-// Function to find current week number
 
-function getWeekNumber() {
-  const today = new Date();
-  const firstDayOfYear = new Date(today.getFullYear(), 0, 1);
-  const pastDaysOfYear = (today - firstDayOfYear) / 86400000;
-  return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
-}
-
-console.log(getObjDate());
+exports.getObjDate = getObjDate;
