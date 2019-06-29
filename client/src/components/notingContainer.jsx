@@ -39,7 +39,7 @@ class NotingContainer extends Component {
     try {
       await saveNote(this.state.note);
       await updateThisDayNoted();
-      window.location = "/";
+      this.props.updateParentState();
       toast.info("Note saved !");
     } catch (ex) {
       toast.error("An error occured !");

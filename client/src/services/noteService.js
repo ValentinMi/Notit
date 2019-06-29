@@ -24,7 +24,6 @@ export function getUserNotes() {
 
 // GET CURRENT WEEK NOTES
 export function getCurrentWeekNotes() {
-  console.log(http.get(apiEndPoint + "/mine/week"));
   return http.get(apiEndPoint + "/mine/week");
 }
 

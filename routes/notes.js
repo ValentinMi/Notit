@@ -26,7 +26,6 @@ router.get("/mine", [auth], async (req, res) => {
 // GET CURRENT WEEK NOTES FROM AN USER
 router.get("/mine/week", [auth], async (req, res) => {
   var date = getObjDate();
-  console.log(date);
   const notes = await Note.find({
     user: req.user._id,
     week: date.week,

@@ -22,12 +22,18 @@ class App extends Component {
   };
 
   async componentDidMount() {
+    // Get current user
     const user = auth.getCurrentUser();
     if (user) {
       const thisDayNoted = await getNotingStatus();
       this.setState({ user: user, thisDayNoted: thisDayNoted });
     }
   }
+
+  // Put thisDayNoted state to false then refresh components
+  updateThisDayNoted = () => {
+    this.setState({ thisDayNoted: true });
+  };
 
   render() {
     const { user, thisDayNoted } = this.state;
@@ -42,7 +48,12 @@ class App extends Component {
                 path="/home"
                 render={() => (
                   <React.Fragment>
-                    {!thisDayNoted && user && <NotingContainer user={user} />}
+                    {!thisDayNoted && user && (
+                      <NotingContainer
+                        user={user}
+                        updateParentState={this.updateThisDayNoted}
+                      />
+                    )}
                     {user && <HomeUserGraph />}
                   </React.Fragment>
                 )}

@@ -15,8 +15,7 @@ class HomeUserGraph extends Component {
   getWeekNotes = async () => {
     let data = await noteService.getCurrentWeekNotes();
     data = data.data;
-    const notes = [0];
-    console.log("cdm data", data);
+    const notes = [];
     data.forEach(note => {
       notes.push(note.value);
     });
