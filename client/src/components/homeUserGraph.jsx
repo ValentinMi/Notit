@@ -16,6 +16,7 @@ class HomeUserGraph extends Component {
     this.getWeekNotes();
   }
 
+  // Get notes from current week
   getWeekNotes = async () => {
     let data = await noteService.getCurrentWeekNotes();
     data = data.data;
@@ -29,11 +30,35 @@ class HomeUserGraph extends Component {
         {
           label: "Day",
           data: notes,
-          backgroundColor: ["red", "blue"]
+          backgroundColor: this.assignColor(notes)
         }
       ]
     };
     this.setState({ weekGraph: weekBarGraphData });
+  };
+
+  // Assign color to value
+  assignColor = notes => {
+    var colors = [];
+    notes.forEach(note => {
+      switch (note) {
+        case 1:
+          colors.push("#f44242");
+          break;
+        case 2:
+          colors.push("#f49b41");
+          break;
+        case 3:
+          colors.push("#f4ee41");
+          break;
+        case 4:
+          colors.push("#a0f441");
+          break;
+        case 5:
+          colors.push("#20b419");
+      }
+    });
+    return colors;
   };
 
   render() {

@@ -17,8 +17,8 @@ import "./styles/App.css";
 
 class App extends Component {
   state = {
-    user: "",
-    thisDayNoted: ""
+    user: {},
+    thisDayNoted: false
   };
 
   async componentDidMount() {
