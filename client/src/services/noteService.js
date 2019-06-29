@@ -7,6 +7,11 @@ const apiEndPoint = apiUrl + "/notes";
 //   return `${apiEndPoint}/${id}`;
 // }
 
+// POST NEW NOTE
+export function saveNote(note) {
+  return http.post(apiEndPoint, note);
+}
+
 // GET NOTES FROM ALL USERS
 export function getAllNotes() {
   return http.get(apiEndPoint);
@@ -17,13 +22,15 @@ export function getUserNotes() {
   return http.get(apiEndPoint + "/mine");
 }
 
-// POST NEW NOTE
-export function saveNote(note) {
-  return http.post(apiEndPoint, note);
+// GET CURRENT WEEK NOTES
+export function getCurrentWeekNotes() {
+  console.log(http.get(apiEndPoint + "/mine/week"));
+  return http.get(apiEndPoint + "/mine/week");
 }
 
 export default {
   getAllNotes,
   getUserNotes,
+  getCurrentWeekNotes,
   saveNote
 };

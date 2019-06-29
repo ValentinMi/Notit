@@ -12,11 +12,18 @@ function getObjDate() {
   var d = date.getUTCDate();
 
   // Function to find current week number
+
   function getWeekNumber() {
-    const today = new Date();
-    const firstDayOfYear = new Date(today.getFullYear(), 0, 1);
-    const pastDaysOfYear = (today - firstDayOfYear) / 86400000;
-    return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7);
+    dt = new Date();
+    var tdt = new Date(dt.valueOf());
+    var dayn = (dt.getDay() + 6) % 7;
+    tdt.setDate(tdt.getDate() - dayn + 3);
+    var firstThursday = tdt.valueOf();
+    tdt.setMonth(0, 1);
+    if (tdt.getDay() !== 4) {
+      tdt.setMonth(0, 1 + ((4 - tdt.getDay() + 7) % 7));
+    }
+    return 1 + Math.ceil((firstThursday - tdt) / 604800000);
   }
 
   return {

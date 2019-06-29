@@ -26,12 +26,14 @@ router.get("/mine", [auth], async (req, res) => {
 // GET CURRENT WEEK NOTES FROM AN USER
 router.get("/mine/week", [auth], async (req, res) => {
   var date = getObjDate();
-
+  console.log(date);
   const notes = await Note.find({
     user: req.user._id,
     week: date.week,
     year: date.year
-  }).select("-__v");
+  })
+    .select("-__v")
+    .sort("day");
 
   res.send(notes);
 });
@@ -50,7 +52,7 @@ router.get("/mine/month", [auth], async (req, res) => {
 });
 
 // GET CURRENT YEAR NOTES FROM AN USER
-router.get("/mine/month", [auth], async (req, res) => {
+router.get("/mine/year", [auth], async (req, res) => {
   var date = getObjDate();
 
   const notes = await Note.find({
