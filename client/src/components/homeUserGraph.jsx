@@ -12,6 +12,10 @@ class HomeUserGraph extends Component {
     this.getWeekNotes();
   }
 
+  componentWillUpdate() {
+    this.getWeekNotes();
+  }
+
   getWeekNotes = async () => {
     let data = await noteService.getCurrentWeekNotes();
     data = data.data;
