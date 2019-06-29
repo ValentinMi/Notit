@@ -27,9 +27,15 @@ export function getCurrentWeekNotes() {
   return http.get(apiEndPoint + "/mine/week");
 }
 
+// GET CURRENT MONTH NOTES
+export function getCurrentMonthNotes() {
+  return http.get(apiEndPoint + "/mine/month");
+}
+
 export default {
   getAllNotes,
   getUserNotes,
   getCurrentWeekNotes,
+  getCurrentMonthNotes,
   saveNote
 };

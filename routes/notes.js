@@ -43,10 +43,11 @@ router.get("/mine/month", [auth], async (req, res) => {
 
   const notes = await Note.find({
     user: req.user._id,
-    month: date.week,
+    month: date.month,
     year: date.year
-  }).select("-__v");
-
+  })
+    .select("-__v")
+    .sort("week");
   res.send(notes);
 });
 

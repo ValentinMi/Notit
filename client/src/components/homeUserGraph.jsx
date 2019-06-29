@@ -5,25 +5,24 @@ import "../styles/homeUserGraph.css";
 
 class HomeUserGraph extends Component {
   state = {
-    weekGraph: {}
+    weekGraph: {},
+    monthGraph: {}
   };
 
   componentDidMount() {
     this.getWeekNotes();
+    this.getMonthNotes();
   }
 
   componentWillUpdate() {
     this.getWeekNotes();
+    this.getMonthNotes();
   }
 
   // Get notes from current week
   getWeekNotes = async () => {
-    let data = await noteService.getCurrentWeekNotes();
-    data = data.data;
-    const notes = [];
-    data.forEach(note => {
-      notes.push(note.value);
-    });
+    const data = await noteService.getCurrentWeekNotes();
+    const notes = this.pushNotesInArray(data);
     const weekBarGraphData = {
       labels: ["M", "Th", "W", "T", "F", "S", "Sn"],
       datasets: [
@@ -35,6 +34,35 @@ class HomeUserGraph extends Component {
       ]
     };
     this.setState({ weekGraph: weekBarGraphData });
+  };
+
+  // Get notes from current month
+  getMonthNotes = async () => {
+    const data = await noteService.getCurrentMonthNotes();
+    const notes = this.pushNotesInArray(data);
+    // Make an average for each week
+
+    const monthBarGraphData = {
+      labels: ["1st", "2nd", "3rd", "4th"],
+      datasets: [
+        {
+          label: "Week",
+          data: notes,
+          backgroundColor: this.assignColor(notes)
+        }
+      ]
+    };
+    this.setState({ monthGraph: monthBarGraphData });
+  };
+
+  // Push all notes in an array
+  pushNotesInArray = data => {
+    data = data.data;
+    const notes = [];
+    data.forEach(note => {
+      notes.push(note.value);
+    });
+    return notes;
   };
 
   // Assign color to value
@@ -66,18 +94,7 @@ class HomeUserGraph extends Component {
   };
 
   render() {
-    const { weekGraph } = this.state;
-
-    // const monthBarGraphData = {
-    //   labels: ["1st", "2nd", "3rd", "4th"],
-    //   datasets: [
-    //     {
-    //       label: "Week",
-    //       data: [1, 2, 3, 4],
-    //       backgroundColor: ["white", "red"]
-    //     }
-    //   ]
-    // };
+    const { weekGraph, monthGraph } = this.state;
 
     // const yearBarGraphData = {
     //   labels: ["J", "F", "M", "A", "M", "J", "Jl", "A", "S", "O", "N", "D"],
@@ -92,7 +109,7 @@ class HomeUserGraph extends Component {
 
     return (
       <div className="homeUserGraph">
-        <BarGraph graphData={weekGraph} />
+        <BarGraph graphData={monthGraph} />
       </div>
     );
   }
