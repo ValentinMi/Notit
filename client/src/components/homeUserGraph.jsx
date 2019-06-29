@@ -56,6 +56,10 @@ class HomeUserGraph extends Component {
           break;
         case 5:
           colors.push("#20b419");
+          break;
+        default:
+          colors.push("red");
+          break;
       }
     });
     return colors;
