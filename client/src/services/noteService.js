@@ -13,23 +13,28 @@ export function saveNote(note) {
 }
 
 // GET NOTES FROM ALL USERS
-export function getAllNotes() {
+function getAllNotes() {
   return http.get(apiEndPoint);
 }
 
 // GET NOTES FROM CURRENT USER
-export function getUserNotes() {
+function getUserNotes() {
   return http.get(apiEndPoint + "/mine");
 }
 
 // GET CURRENT WEEK NOTES
-export function getCurrentWeekNotes() {
+function getCurrentWeekNotes() {
   return http.get(apiEndPoint + "/mine/week");
 }
 
 // GET CURRENT MONTH NOTES
-export function getCurrentMonthNotes() {
+function getCurrentMonthNotes() {
   return http.get(apiEndPoint + "/mine/month");
+}
+
+// GET CURRENT YEAR NOTES
+function getCurrentYearNotes() {
+  return http.get(apiEndPoint + "/mine/year");
 }
 
 export default {
@@ -37,5 +42,6 @@ export default {
   getUserNotes,
   getCurrentWeekNotes,
   getCurrentMonthNotes,
+  getCurrentYearNotes,
   saveNote
 };

@@ -58,7 +58,9 @@ router.get("/mine/year", [auth], async (req, res) => {
   const notes = await Note.find({
     user: req.user._id,
     year: date.year
-  }).select("-__v");
+  })
+    .select("-__v")
+    .sort("month");
 
   res.send(notes);
 });

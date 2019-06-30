@@ -2,22 +2,26 @@ import React, { Component } from "react";
 import BarGraph from "./commons/graph/barGraph";
 import noteService from "../services/noteService";
 import "../styles/homeUserGraph.css";
+import { months } from "moment";
 
 class HomeUserGraph extends Component {
   state = {
     weekGraph: {},
-    monthGraph: {}
+    monthGraph: {},
+    yearGraph: {}
   };
 
   componentDidMount() {
     this.getWeekNotes();
     this.getMonthNotes();
+    this.getYearNotes();
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.dayNoted !== prevProps.dayNoted) {
       this.getWeekNotes();
       this.getMonthNotes();
+      this.getYearNotes();
     }
   }
 
@@ -25,12 +29,15 @@ class HomeUserGraph extends Component {
   getWeekNotes = async () => {
     const data = await noteService.getCurrentWeekNotes();
     const notes = this.pushNotesInArray(data);
+    const notesValue = [];
+    notes.forEach(note => {
+      notesValue.push(note.value);
+    });
     const weekBarGraphData = {
       labels: ["M", "Th", "W", "T", "F", "S", "Sn"],
       datasets: [
         {
-          label: "Day",
-          data: notes,
+          data: notesValue,
           backgroundColor: this.assignColor(notes)
         }
       ]
@@ -38,23 +45,168 @@ class HomeUserGraph extends Component {
     this.setState({ weekGraph: weekBarGraphData });
   };
 
-  // Get notes from current month
+  // Get notes from current month and make an average from each weeks notes
   getMonthNotes = async () => {
+    // Fetch month's notes from db
     const data = await noteService.getCurrentMonthNotes();
     const notes = this.pushNotesInArray(data);
-    // Make an average for each week
+    const notesValue = [];
+    notes.forEach(note => {
+      notesValue.push(note.value);
+    });
 
+    const weeksNotesAverage = this.splitNotesInWeekAverageArray(notesValue);
     const monthBarGraphData = {
       labels: ["1st", "2nd", "3rd", "4th"],
       datasets: [
         {
-          label: "",
-          data: notes,
-          backgroundColor: this.assignColor(notes)
+          data: weeksNotesAverage,
+          backgroundColor: this.assignColor(weeksNotesAverage)
         }
       ]
     };
     this.setState({ monthGraph: monthBarGraphData });
+  };
+
+  // Get notes from current year and make an average from each months notes
+  getYearNotes = async () => {
+    // Fetch notes from current year
+    const data = await noteService.getCurrentYearNotes();
+    const notes = this.pushNotesInArray(data);
+    const monthsAverages = this.splitNotesInMonthAverageArray(notes);
+    const yearBarGraphData = {
+      labels: ["J", "F", "M", "A", "M", "J", "Jl", "A", "S", "O", "N", "D"],
+      datasets: [
+        {
+          data: monthsAverages,
+          backgroundColor: this.assignColor(monthsAverages)
+        }
+      ]
+    };
+    this.setState({ yearGraph: yearBarGraphData });
+  };
+
+  // Split notes in months Arrays and get average of them
+  splitNotesInMonthAverageArray = notes => {
+    // Split year's notes into 12 months Arrays
+    const jan = [];
+    const feb = [];
+    const mar = [];
+    const apr = [];
+    const may = [];
+    const jun = [];
+    const jul = [];
+    const aug = [];
+    const sep = [];
+    const oct = [];
+    const nov = [];
+    const dec = [];
+
+    // Push note in the good month array based on their month number
+    notes.forEach(note => {
+      switch (note.month) {
+        case 1:
+          jan.push(note.value);
+          break;
+        case 2:
+          feb.push(note.value);
+          break;
+        case 3:
+          mar.push(note.value);
+          break;
+        case 4:
+          apr.push(note.value);
+          break;
+        case 5:
+          may.push(note.value);
+          break;
+        case 6:
+          jun.push(note.value);
+          break;
+        case 7:
+          jul.push(note.value);
+          break;
+        case 8:
+          aug.push(note.value);
+          break;
+        case 9:
+          sep.push(note.value);
+          break;
+        case 10:
+          oct.push(note.value);
+          break;
+        case 11:
+          nov.push(note.value);
+          break;
+        case 12:
+          dec.push(note.value);
+          break;
+        default:
+          break;
+      }
+    });
+
+    // Push month Array into new year Array
+    const yearNotesPerMonth = [
+      jan,
+      feb,
+      mar,
+      apr,
+      may,
+      jun,
+      jul,
+      aug,
+      sep,
+      oct,
+      nov,
+      dec
+    ];
+    // Make an average for each month and push it into new Array
+    const monthsAverages = [];
+    yearNotesPerMonth.forEach(array => {
+      monthsAverages.push(Math.round(this.createAverage(array)));
+    });
+
+    return monthsAverages;
+  };
+
+  // Split notes in weeks Arrays and get average of them
+  splitNotesInWeekAverageArray = notes => {
+    // Split month's notes into 4 weeks Arrays
+    const firstWeekNotes = [];
+    const secondWeekNotes = [];
+    const thirdWeekNotes = [];
+    const fourthWeekNotes = [];
+    for (let i = 0; i < notes.length; i++) {
+      if (i <= 6) {
+        firstWeekNotes.push(notes[i]);
+      } else if (i <= 13) {
+        secondWeekNotes.push(notes[i]);
+      } else if (i <= 20) {
+        thirdWeekNotes.push(notes[i]);
+      } else {
+        fourthWeekNotes.push(notes[i]);
+      }
+    }
+    // Make an month Array with the 4 weeks Arrays average in
+    const weeksNotesAverage = [
+      Math.round(this.createAverage(firstWeekNotes)),
+      Math.round(this.createAverage(secondWeekNotes)),
+      Math.round(this.createAverage(thirdWeekNotes)),
+      Math.round(this.createAverage(fourthWeekNotes))
+    ];
+
+    return weeksNotesAverage;
+  };
+
+  // Make an average from array's value
+  createAverage = array => {
+    var sum = 0;
+    for (let i = 0; i < array.length; i++) {
+      sum = sum + array[i];
+    }
+    var average = sum / array.length;
+    return average;
   };
 
   // Push all notes in an array
@@ -62,7 +214,7 @@ class HomeUserGraph extends Component {
     data = data.data;
     const notes = [];
     data.forEach(note => {
-      notes.push(note.value);
+      notes.push(note);
     });
     return notes;
   };
@@ -96,22 +248,10 @@ class HomeUserGraph extends Component {
   };
 
   render() {
-    const { weekGraph, monthGraph } = this.state;
-
-    // const yearBarGraphData = {
-    //   labels: ["J", "F", "M", "A", "M", "J", "Jl", "A", "S", "O", "N", "D"],
-    //   datasets: [
-    //     {
-    //       label: "Month",
-    //       data: [1, 2, 3, 4, 5, 4, 3],
-    //       backgroundColor: ["white", "red"]
-    //     }
-    //   ]
-    // };
-
+    const { weekGraph, monthGraph, yearGraph } = this.state;
     return (
       <div className="homeUserGraph">
-        <BarGraph graphData={weekGraph} />
+        <BarGraph graphData={yearGraph} />
       </div>
     );
   }

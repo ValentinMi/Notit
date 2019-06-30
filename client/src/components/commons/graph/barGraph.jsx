@@ -6,6 +6,9 @@ const BarGraph = ({ graphData }) => {
     <Bar
       data={graphData}
       options={{
+        legend: {
+          display: false
+        },
         maintainAspectRatio: false,
         scales: {
           yAxes: [

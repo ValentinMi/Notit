@@ -12,7 +12,6 @@ function getObjDate() {
   var d = date.getUTCDate();
 
   // Function to find current week number
-
   function getWeekNumber() {
     dt = new Date();
     var tdt = new Date(dt.valueOf());
