@@ -14,9 +14,11 @@ class HomeUserGraph extends Component {
     this.getMonthNotes();
   }
 
-  componentWillUpdate() {
-    this.getWeekNotes();
-    this.getMonthNotes();
+  componentDidUpdate(prevProps) {
+    if (this.props.dayNoted !== prevProps.dayNoted) {
+      this.getWeekNotes();
+      this.getMonthNotes();
+    }
   }
 
   // Get notes from current week
@@ -46,7 +48,7 @@ class HomeUserGraph extends Component {
       labels: ["1st", "2nd", "3rd", "4th"],
       datasets: [
         {
-          label: "Week",
+          label: "",
           data: notes,
           backgroundColor: this.assignColor(notes)
         }
@@ -109,7 +111,7 @@ class HomeUserGraph extends Component {
 
     return (
       <div className="homeUserGraph">
-        <BarGraph graphData={monthGraph} />
+        <BarGraph graphData={weekGraph} />
       </div>
     );
   }

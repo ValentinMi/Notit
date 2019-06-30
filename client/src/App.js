@@ -54,7 +54,7 @@ class App extends Component {
                         updateParentState={this.updateThisDayNoted}
                       />
                     )}
-                    {user && <HomeUserGraph />}
+                    {user && <HomeUserGraph dayNoted={thisDayNoted} />}
                   </React.Fragment>
                 )}
               />
