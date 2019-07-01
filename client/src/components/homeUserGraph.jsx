@@ -5,6 +5,7 @@ import "../styles/homeUserGraph.css";
 
 class HomeUserGraph extends Graph {
   state = {
+    graphType: "bar",
     freq: "week", // week, month or year
     weekGraph: {},
     monthGraph: {},
@@ -29,13 +30,25 @@ class HomeUserGraph extends Graph {
   // RENDERING //
   ///////////////
 
-  render() {
-    const { weekGraph, monthGraph, yearGraph, freq } = this.state;
+  renderBarGraph = () => {
+    const { weekGraph, monthGraph, yearGraph, freq, graphType } = this.state;
     return (
-      <div className="homeUserGraph">
-        <BarGraph graphData={weekGraph} />
-      </div>
+      <React.Fragment>
+        {graphType === "bar" && freq === "week" && (
+          <BarGraph graphData={weekGraph} />
+        )}
+        {graphType === "bar" && freq === "month" && (
+          <BarGraph graphData={monthGraph} />
+        )}
+        {graphType === "bar" && freq === "year" && (
+          <BarGraph graphData={yearGraph} />
+        )}
+      </React.Fragment>
     );
+  };
+
+  render() {
+    return <div className="homeUserGraph">{this.renderBarGraph()}</div>;
   }
 }
 
