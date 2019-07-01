@@ -6,6 +6,10 @@ class Graph extends Component {
   // METHOD //
   ////////////
 
+  changeGraphType = freq => {
+    this.setState({ freq: freq });
+  };
+
   // Get notes from current week
   getWeekNotes = async () => {
     const data = await noteService.getCurrentWeekNotes();
