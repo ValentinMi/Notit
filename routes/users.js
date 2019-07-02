@@ -1,4 +1,5 @@
 const _ = require("lodash");
+const CronJob = require("cron").CronJob;
 const bcrypt = require("bcrypt");
 const moment = require("moment");
 const auth = require("../middlewares/auth");
@@ -82,5 +83,17 @@ router.put("/resetdaynoted", [auth], [admin], async (req, res) => {
 
   res.send(users);
 });
+
+// Reset note boolean at midnight
+const job = new CronJob("00 00 00 * * *", async function() {
+  const users = await User.find();
+
+  users.forEach(async user => {
+    user.thisDayNoted = false;
+    await user.save();
+  });
+  console.log("thisDayNoted Reseted");
+});
+job.start();
 
 module.exports = router;

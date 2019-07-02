@@ -8,7 +8,7 @@ import "../../../styles/graphMenu.css";
 class GraphMenu extends Component {
   state = {
     selectedType: "Week",
-    dateFormat: "dd/MM/yyyy",
+    dateFormat: "ww/yyyy",
     startDate: new Date()
   };
 
@@ -42,7 +42,7 @@ class GraphMenu extends Component {
           <div className="dropdown-menu">
             <a
               onClick={async () => {
-                await this.handleFreqTime("Week", "dd/MM/yyyy");
+                await this.handleFreqTime("Week", "ww/yyyy");
                 this.props.handleChangeFreq(this.state.selectedType);
               }}
               className="dropdown-item"
