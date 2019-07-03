@@ -5,6 +5,7 @@ const app = express();
 require("./startup/cors")(app);
 require("./startup/routes")(app);
 require("./startup/db")();
+require("./startup/midnightReset")();
 
 const port = process.env.PORT || config.get("port");
 const server = app.listen(port, () =>
