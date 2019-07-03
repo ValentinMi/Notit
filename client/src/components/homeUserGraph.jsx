@@ -2,6 +2,7 @@ import React from "react";
 import Graph from "./commons/graph/Graph";
 import GraphMenu from "./commons/graph/graphMenu";
 import BarGraph from "./commons/graph/barGraph";
+import LineGraph from "./commons/graph/lineGraph";
 import "../styles/homeUserGraph.css";
 
 class HomeUserGraph extends Graph {
@@ -19,17 +20,18 @@ class HomeUserGraph extends Graph {
     this.getYearNotes();
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     if (this.props.dayNoted !== prevProps.dayNoted) {
       this.getWeekNotes();
       this.getMonthNotes();
       this.getYearNotes();
     }
+    // if (this.state.freq !== prevState.freq) {
+    //   this.getWeekNotes();
+    //   this.getMonthNotes();
+    //   this.getYearNotes();
+    // }
   }
-
-  changeFreq = freq => {
-    this.setState({ freq: freq });
-  };
 
   ///////////////
   // RENDERING //
@@ -52,11 +54,32 @@ class HomeUserGraph extends Graph {
     );
   };
 
+  renderLineGraph = () => {
+    const { weekGraph, monthGraph, yearGraph, freq, graphType } = this.state;
+    return (
+      <React.Fragment>
+        {graphType === "line" && freq === "Week" && (
+          <LineGraph graphData={weekGraph} />
+        )}
+        {graphType === "line" && freq === "Month" && (
+          <LineGraph graphData={monthGraph} />
+        )}
+        {graphType === "line" && freq === "Year" && (
+          <LineGraph graphData={yearGraph} />
+        )}
+      </React.Fragment>
+    );
+  };
+
   render() {
+    const { graphType } = this.state;
     return (
       <div className="homeUserGraph">
-        <GraphMenu handleChangeFreq={this.changeFreq} />
-        {this.renderBarGraph()}
+        <GraphMenu
+          handleChangeFreq={this.changeFreq}
+          handleChangeType={this.changeType}
+        />
+        {graphType === "bar" ? this.renderBarGraph() : this.renderLineGraph()}
       </div>
     );
   }

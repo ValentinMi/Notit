@@ -6,8 +6,12 @@ class Graph extends Component {
   // METHOD //
   ////////////
 
-  changeGraphType = freq => {
+  changeFreq = freq => {
     this.setState({ freq: freq });
+  };
+
+  changeType = type => {
+    this.setState({ graphType: type });
   };
 
   // Get notes from current week

@@ -7,7 +7,8 @@ import "../../../styles/graphMenu.css";
 
 class GraphMenu extends Component {
   state = {
-    selectedType: "Week",
+    selectedType: "bar",
+    selectedFreq: "Week",
     dateFormat: "ww/yyyy",
     startDate: new Date()
   };
@@ -18,14 +19,22 @@ class GraphMenu extends Component {
     });
   };
 
-  handleFreqTime = (freq, dateFormat) => {
-    this.setState({
-      selectedType: freq,
+  handleFreqTime = async (freq, dateFormat) => {
+    await this.setState({
+      selectedFreq: freq,
       dateFormat: dateFormat
     });
+    this.props.handleChangeFreq(this.state.selectedFreq);
+  };
+
+  handleType = async type => {
+    await this.setState({ selectedType: type });
+    this.props.handleChangeType(this.state.selectedType);
   };
 
   render() {
+    // Object distructuring
+    const { selectedFreq, startDate, dateFormat } = this.state;
     return (
       <div className="graphMenu">
         <div className="btn-group freq-btn">
@@ -36,32 +45,29 @@ class GraphMenu extends Component {
             aria-haspopup="true"
             aria-expanded="false"
           >
-            {this.state.selectedType}
+            {selectedFreq}
           </button>
 
           <div className="dropdown-menu">
             <a
-              onClick={async () => {
-                await this.handleFreqTime("Week", "ww/yyyy");
-                this.props.handleChangeFreq(this.state.selectedType);
+              onClick={() => {
+                this.handleFreqTime("Week", "ww/yyyy");
               }}
               className="dropdown-item"
             >
               Week
             </a>
             <a
-              onClick={async () => {
-                await this.handleFreqTime("Month", "MM/yyyy");
-                this.props.handleChangeFreq(this.state.selectedType);
+              onClick={() => {
+                this.handleFreqTime("Month", "MM/yyyy");
               }}
               className="dropdown-item"
             >
               Month
             </a>
             <a
-              onClick={async () => {
-                await this.handleFreqTime("Year", "yyyy");
-                this.props.handleChangeFreq(this.state.selectedType);
+              onClick={() => {
+                this.handleFreqTime("Year", "yyyy");
               }}
               className="dropdown-item"
             >
@@ -71,13 +77,25 @@ class GraphMenu extends Component {
         </div>
         <DatePicker
           className="datePicker"
-          selected={this.state.startDate}
+          selected={startDate}
           onChange={this.handleDateChange}
-          dateFormat={this.state.dateFormat}
+          dateFormat={dateFormat}
         />
         <div className="graphType-btn-cont">
-          <img className="graphType-btn" src={line} alt="linesGraph" />
-          <img className="graphType-btn" src={bar} alt="barGraph" />
+          <button
+            onClick={() => {
+              this.handleType("line");
+            }}
+          >
+            <img className="graphType-btn" src={line} alt="linesGraph" />
+          </button>
+          <button
+            onClick={() => {
+              this.handleType("bar");
+            }}
+          >
+            <img className="graphType-btn" src={bar} alt="barGraph" />
+          </button>
         </div>
       </div>
     );
