@@ -26,11 +26,6 @@ class HomeUserGraph extends Graph {
       this.getMonthNotes();
       this.getYearNotes();
     }
-    // if (this.state.freq !== prevState.freq) {
-    //   this.getWeekNotes();
-    //   this.getMonthNotes();
-    //   this.getYearNotes();
-    // }
   }
 
   ///////////////

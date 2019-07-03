@@ -22,7 +22,7 @@ class Graph extends Component {
     notes.forEach(note => {
       notesValue.push(note.value);
     });
-    const weekBarGraphData = {
+    const weekGraphData = {
       labels: ["M", "Th", "W", "T", "F", "S", "Sn"],
       datasets: [
         {
@@ -31,7 +31,7 @@ class Graph extends Component {
         }
       ]
     };
-    this.setState({ weekGraph: weekBarGraphData });
+    this.setState({ weekGraph: weekGraphData });
   };
 
   // Get notes from current month and make an average from each weeks notes
@@ -45,7 +45,7 @@ class Graph extends Component {
     });
 
     const weeksNotesAverage = this.splitNotesInWeekAverageArray(notesValue);
-    const monthBarGraphData = {
+    const monthGraphData = {
       labels: ["1st", "2nd", "3rd", "4th"],
       datasets: [
         {
@@ -54,7 +54,7 @@ class Graph extends Component {
         }
       ]
     };
-    this.setState({ monthGraph: monthBarGraphData });
+    this.setState({ monthGraph: monthGraphData });
   };
 
   // Get notes from current year and make an average from each months notes
@@ -63,7 +63,7 @@ class Graph extends Component {
     const data = await noteService.getCurrentYearNotes();
     const notes = this.pushNotesInArray(data);
     const monthsAverages = this.splitNotesInMonthAverageArray(notes);
-    const yearBarGraphData = {
+    const yearGraphData = {
       labels: ["J", "F", "M", "A", "M", "J", "Jl", "A", "S", "O", "N", "D"],
       datasets: [
         {
@@ -72,7 +72,7 @@ class Graph extends Component {
         }
       ]
     };
-    this.setState({ yearGraph: yearBarGraphData });
+    this.setState({ yearGraph: yearGraphData });
   };
 
   // Split notes in months Arrays and get average of them
