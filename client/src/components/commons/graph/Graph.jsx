@@ -6,6 +6,12 @@ class Graph extends Component {
   // METHOD //
   ////////////
 
+  fetchData = () => {
+    this.getWeekNotes();
+    this.getMonthNotes();
+    this.getYearNotes();
+  };
+
   changeFreq = freq => {
     this.setState({ freq: freq });
   };
@@ -16,6 +22,7 @@ class Graph extends Component {
 
   // Get notes from current week
   getWeekNotes = async () => {
+    console.log(this.state);
     const data = await noteService.getCurrentWeekNotes();
     const notes = this.pushNotesInArray(data);
     const notesValue = [];
@@ -27,7 +34,7 @@ class Graph extends Component {
       datasets: [
         {
           data: notesValue,
-          backgroundColor: this.assignColor(notesValue)
+          backgroundColor: this.assignColor(notesValue, this.state.graphType)
         }
       ]
     };
@@ -50,7 +57,7 @@ class Graph extends Component {
       datasets: [
         {
           data: weeksNotesAverage,
-          backgroundColor: this.assignColor(weeksNotesAverage)
+          backgroundColor: this.assignColor(notesValue, this.state.graphType)
         }
       ]
     };
@@ -68,7 +75,10 @@ class Graph extends Component {
       datasets: [
         {
           data: monthsAverages,
-          backgroundColor: this.assignColor(monthsAverages)
+          backgroundColor: this.assignColor(
+            monthsAverages,
+            this.state.graphType
+          )
         }
       ]
     };
@@ -209,31 +219,35 @@ class Graph extends Component {
   };
 
   // Assign color to value
-  assignColor = notes => {
-    var colors = [];
-    notes.forEach(note => {
-      switch (note) {
-        case 1:
-          colors.push("#f44242");
-          break;
-        case 2:
-          colors.push("#f49b41");
-          break;
-        case 3:
-          colors.push("#f4ee41");
-          break;
-        case 4:
-          colors.push("#a0f441");
-          break;
-        case 5:
-          colors.push("#20b419");
-          break;
-        default:
-          colors.push("red");
-          break;
-      }
-    });
-    return colors;
+  assignColor = (notes, graphType) => {
+    if (graphType === "bar") {
+      var colors = [];
+      notes.forEach(note => {
+        switch (note) {
+          case 1:
+            colors.push("#f44242");
+            break;
+          case 2:
+            colors.push("#f49b41");
+            break;
+          case 3:
+            colors.push("#f4ee41");
+            break;
+          case 4:
+            colors.push("#a0f441");
+            break;
+          case 5:
+            colors.push("#20b419");
+            break;
+          default:
+            colors.push("red");
+            break;
+        }
+      });
+      return colors;
+    } else {
+      return "red";
+    }
   };
 }
 
