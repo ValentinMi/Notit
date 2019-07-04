@@ -9,7 +9,6 @@ const LineGraph = ({ graphData }) => {
         legend: {
           display: false
         },
-        backgroundColor: "",
         maintainAspectRatio: false,
         scales: {
           yAxes: [

@@ -15,16 +15,12 @@ class HomeUserGraph extends Graph {
   };
 
   componentDidMount() {
-    this.getWeekNotes();
-    this.getMonthNotes();
-    this.getYearNotes();
+    this.fetchData();
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (this.props.dayNoted !== prevProps.dayNoted) {
-      this.getWeekNotes();
-      this.getMonthNotes();
-      this.getYearNotes();
+      this.fetchData();
     }
   }
 
@@ -73,6 +69,7 @@ class HomeUserGraph extends Graph {
         <GraphMenu
           handleChangeFreq={this.changeFreq}
           handleChangeType={this.changeType}
+          fetchData={this.fetchData}
         />
         {graphType === "bar" ? this.renderBarGraph() : this.renderLineGraph()}
       </div>

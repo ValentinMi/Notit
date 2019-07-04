@@ -1,28 +1,19 @@
 import React, { Component } from "react";
 import line from "../../../img/graphLine.svg";
 import bar from "../../../img/graphBar.svg";
-import DatePicker from "react-datepicker";
+import DateSelect from "./dateSelect";
 import "react-datepicker/dist/react-datepicker.css";
 import "../../../styles/graphMenu.css";
 
 class GraphMenu extends Component {
   state = {
     selectedType: "bar",
-    selectedFreq: "Week",
-    dateFormat: "ww/yyyy",
-    startDate: new Date()
+    selectedFreq: "Week"
   };
 
-  handleDateChange = date => {
-    this.setState({
-      startDate: date
-    });
-  };
-
-  handleFreqTime = async (freq, dateFormat) => {
+  handleFreqTime = async freq => {
     await this.setState({
-      selectedFreq: freq,
-      dateFormat: dateFormat
+      selectedFreq: freq
     });
     this.props.handleChangeFreq(this.state.selectedFreq);
   };
@@ -30,11 +21,12 @@ class GraphMenu extends Component {
   handleType = async type => {
     await this.setState({ selectedType: type });
     this.props.handleChangeType(this.state.selectedType);
+    this.props.fetchData();
   };
 
   render() {
     // Object distructuring
-    const { selectedFreq, startDate, dateFormat } = this.state;
+    const { selectedFreq } = this.state;
     return (
       <div className="graphMenu">
         <div className="btn-group freq-btn">
@@ -75,12 +67,7 @@ class GraphMenu extends Component {
             </a>
           </div>
         </div>
-        <DatePicker
-          className="datePicker"
-          selected={startDate}
-          onChange={this.handleDateChange}
-          dateFormat={dateFormat}
-        />
+        <DateSelect freq={selectedFreq} />
         <div className="graphType-btn-cont">
           <button
             onClick={() => {

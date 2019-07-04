@@ -22,7 +22,6 @@ class Graph extends Component {
 
   // Get notes from current week
   getWeekNotes = async () => {
-    console.log(this.state);
     const data = await noteService.getCurrentWeekNotes();
     const notes = this.pushNotesInArray(data);
     const notesValue = [];
@@ -246,7 +245,7 @@ class Graph extends Component {
       });
       return colors;
     } else {
-      return "red";
+      return "";
     }
   };
 }
