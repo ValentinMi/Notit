@@ -15,12 +15,12 @@ class HomeUserGraph extends Graph {
   };
 
   componentDidMount() {
-    this.fetchData();
+    this.fetchCurrentData();
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (this.props.dayNoted !== prevProps.dayNoted) {
-      this.fetchData();
+      this.fetchCurrentData();
     }
   }
 

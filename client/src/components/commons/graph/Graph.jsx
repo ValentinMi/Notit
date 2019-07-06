@@ -6,12 +6,6 @@ class Graph extends Component {
   // METHOD //
   ////////////
 
-  fetchData = () => {
-    this.getWeekNotes();
-    this.getMonthNotes();
-    this.getYearNotes();
-  };
-
   changeFreq = freq => {
     this.setState({ freq: freq });
   };
@@ -20,8 +14,18 @@ class Graph extends Component {
     this.setState({ graphType: type });
   };
 
+  //////////////////
+  // CURRENT DATA //
+  //////////////////
+
+  fetchCurrentData = () => {
+    this.getCurrentNotes();
+    this.getCurrentMonthNotes();
+    this.getCurrentYearNotes();
+  };
+
   // Get notes from current week
-  getWeekNotes = async () => {
+  getCurrentNotes = async () => {
     const data = await noteService.getCurrentWeekNotes();
     const notes = this.pushNotesInArray(data);
     const notesValue = [];
@@ -40,8 +44,12 @@ class Graph extends Component {
     this.setState({ weekGraph: weekGraphData });
   };
 
+  ////////////////////
+  // DATA TREATMENT //
+  ////////////////////
+
   // Get notes from current month and make an average from each weeks notes
-  getMonthNotes = async () => {
+  getCurrentMonthNotes = async () => {
     // Fetch month's notes from db
     const data = await noteService.getCurrentMonthNotes();
     const notes = this.pushNotesInArray(data);
@@ -64,7 +72,7 @@ class Graph extends Component {
   };
 
   // Get notes from current year and make an average from each months notes
-  getYearNotes = async () => {
+  getCurrentYearNotes = async () => {
     // Fetch notes from current year
     const data = await noteService.getCurrentYearNotes();
     const notes = this.pushNotesInArray(data);
