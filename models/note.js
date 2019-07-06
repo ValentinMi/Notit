@@ -33,8 +33,14 @@ const Note = mongoose.model(
       required: true
     },
     day: {
-      type: Number,
-      required: true
+      dayInWeek: {
+        type: Number,
+        required: true
+      },
+      dayInMonth: {
+        type: Number,
+        required: true
+      }
     }
   })
 );

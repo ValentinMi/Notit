@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import DatePicker from "react-datepicker";
+import format from "moment";
 
 class DateSelect extends Component {
   state = {
     dateFormat: "ww/yyyy",
-    startDate: new Date()
+    date: new Date()
   };
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     if (this.props.freq !== prevProps.freq) {
       this.handleDateFormatChange();
     }
@@ -26,16 +27,17 @@ class DateSelect extends Component {
 
   handleDateSelect = date => {
     this.setState({
-      startDate: date
+      date: date
     });
   };
 
   render() {
-    const { startDate, dateFormat } = this.state;
+    const { date, dateFormat } = this.state;
+    console.log(date);
     return (
       <DatePicker
         className="datePicker"
-        selected={startDate}
+        selected={date}
         onChange={this.handleDateSelect}
         dateFormat={dateFormat}
       />
