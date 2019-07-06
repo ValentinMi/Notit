@@ -1,5 +1,5 @@
 import React from "react";
-import Graph from "./commons/graph/Graph";
+import Graph from "./commons/graph/graph";
 import GraphMenu from "./commons/graph/graphMenu";
 import BarGraph from "./commons/graph/barGraph";
 import LineGraph from "./commons/graph/lineGraph";
@@ -69,7 +69,7 @@ class HomeUserGraph extends Graph {
         <GraphMenu
           handleChangeFreq={this.changeFreq}
           handleChangeType={this.changeType}
-          fetchData={this.fetchData}
+          fetchData={this.fetchCurrentData}
         />
         {graphType === "bar" ? this.renderBarGraph() : this.renderLineGraph()}
       </div>

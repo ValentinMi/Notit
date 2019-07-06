@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import DatePicker from "react-datepicker";
-import format from "moment";
 
 class DateSelect extends Component {
   state = {
