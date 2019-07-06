@@ -146,6 +146,8 @@ router.get("/mine/:year", [auth], async (req, res) => {
   })
     .select("-__v")
     .sort("month");
+
+  res.send(notes);
 });
 
 module.exports = router;
