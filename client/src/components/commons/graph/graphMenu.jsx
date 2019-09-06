@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import line from "../../../img/graphLine.svg";
 import bar from "../../../img/graphBar.svg";
-import DateSelect from "./dateSelect";
+import DateSelect from "../dateSelect";
 import "react-datepicker/dist/react-datepicker.css";
 import "../../../styles/graphMenu.css";
 
@@ -67,7 +67,10 @@ class GraphMenu extends Component {
             </a>
           </div>
         </div>
-        <DateSelect freq={selectedFreq} />
+        <DateSelect
+          freq={selectedFreq}
+          getSelectDate={this.props.getSelectDate}
+        />
         <div className="graphType-btn-cont">
           <button
             onClick={() => {

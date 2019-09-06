@@ -14,6 +14,10 @@ class Graph extends Component {
     this.setState({ graphType: type });
   };
 
+  getSelectedDateObj = date => {
+    this.setState({ selectedDate: date });
+  };
+
   //////////////////
   // CURRENT DATA //
   //////////////////
@@ -100,6 +104,7 @@ class Graph extends Component {
 
   // Get specific week's notes
   getSpecificWeekNotes = async (week, year) => {
+    // Fetch week's notes from api
     const data = await noteService.getSpecificWeekNotes(week, year);
     const notes = this.pushNotesInArray(data);
     const notesValue = [];
@@ -120,7 +125,7 @@ class Graph extends Component {
 
   // Get specific month's notes
   getSpecificMonthNotes = async (month, year) => {
-    // Fetch month's notes from db
+    // Fetch month's notes from api
     const data = await noteService.getSpecificMonthNotes(month, year);
     const notes = this.pushNotesInArray(data);
     const notesValue = [];
@@ -142,7 +147,7 @@ class Graph extends Component {
   };
 
   getSpecificYearNotes = async year => {
-    // Fetch notes from current year
+    // Fetch year's notes from api
     const data = await noteService.getSpecificYearNotes(year);
     const notes = this.pushNotesInArray(data);
     const monthsAverages = this.splitNotesInMonthAverageArray(notes);

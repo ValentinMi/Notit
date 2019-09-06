@@ -1,6 +1,6 @@
 {
   "db": "mongodb://localhost/notit",
-  "port": "3900",
+  "port": "3700",
   "jwtPrivateKey": "unsecureKey",
   "requiresAuth": true
 }

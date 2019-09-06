@@ -9,6 +9,7 @@ import LoginForm from "./components/loginForm";
 import RegisterForm from "./components/registerForm";
 import Logout from "./components/logOut";
 import HomeUserGraph from "./components/homeUserGraph";
+import HomeCommunityGraph from "./components/homeCommunityGraph";
 // Services
 import auth from "./services/authService";
 import { getNotingStatus } from "./services/userService";
@@ -55,6 +56,7 @@ class App extends Component {
                       />
                     )}
                     {user && <HomeUserGraph dayNoted={thisDayNoted} />}
+                    {!user && <HomeCommunityGraph />}
                   </React.Fragment>
                 )}
               />

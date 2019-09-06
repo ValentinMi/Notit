@@ -3,9 +3,8 @@ import Graph from "./commons/graph/graph";
 import GraphMenu from "./commons/graph/graphMenu";
 import BarGraph from "./commons/graph/barGraph";
 import LineGraph from "./commons/graph/lineGraph";
-import "../styles/homeUserGraph.css";
 
-class HomeUserGraph extends Graph {
+class HomeCommunityGraph extends Graph {
   state = {
     graphType: "bar",
     freq: "Week", // Week, Month or Year
@@ -16,15 +15,12 @@ class HomeUserGraph extends Graph {
   };
 
   componentDidMount() {
-    this.fetchCurrentData();
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (this.props.dayNoted !== prevProps.dayNoted) {
-      this.fetchCurrentData();
     }
     if (this.state.selectedDate !== prevState.selectedDate) {
-      this.fetchSpecificData(this.state.selectedDate);
     }
   }
 
@@ -84,4 +80,4 @@ class HomeUserGraph extends Graph {
   }
 }
 
-export default HomeUserGraph;
+export default HomeCommunityGraph;
